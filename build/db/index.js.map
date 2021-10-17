@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../db/index.js"],"names":["Object","assign","connect"],"mappings":";;;;;;AAAA;;kBAEeA,OAAOC,MAAP,CAAc,EAAd,EAAiB,EAAEC,oBAAF,EAAjB,C","file":"index.js","sourcesContent":["import { connect } from './db'\r\n\r\nexport default Object.assign({},{ connect })\r\n"]}

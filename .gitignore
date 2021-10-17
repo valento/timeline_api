@@ -1,0 +1,8 @@
+.env
+*.yaml
+*.raml
+*.sql
+*.txt
+*/config
+#ssl
+node_modules
