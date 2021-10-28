@@ -7,6 +7,13 @@ import repository from './repo/repository.js'
 
 // Configure an Event Notifier:
 const mediator = new EventEmmiter()
+
+// Handle Errors:
+process.on('uncaughtRejection', (err, promise) => {
+  console.error('Unhandled Rejection', err)
+})
+
+// Set Event Emmiter:
 mediator.on('di.ready', container => {
   let rep
 // init DB-API:
@@ -28,6 +35,7 @@ mediator.on('di.ready', container => {
     })
     console.log('Server started on: ', container.cradle.serverSettings.port)
   })
+  .catch( err => console.error(err))
 })
 mediator.on('di.error', err => { console.log('DI failed becaouse of: ', err) })
 

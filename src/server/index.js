@@ -3,19 +3,20 @@ import bodyparser from 'body-parser'
 import morgan from 'morgan'
 import helmet from 'helmet'
 
-import tmln_api from '../api/timeline/index.js'
+import _api from '../api/index.js'
+
 
 const start = (container) => {
   return new Promise( (resolve,reject) => {
-
-    const { port } = container.resolve('serverSettings')
-    const repo = container.resolve('repo')
-
-    if(!repo){
-      reject(new Error('Server needs DB-API! No repository ...'))
+    if(typeof container.resolve !== 'function'){
+      reject(new Error('CONTAINER ain\'t a function ...'))
+    } else {
+      const { port } = container.resolve('serverSettings')
+      const repo = container.resolve('repo')
     }
-    if(!port){
-      reject(new Error('Server needs PORT! No port available ...'))
+
+    if(!repo || !port){
+      reject(new Error('REPO or PORT is missing ...'))
     }
 
     const app = express()
@@ -25,17 +26,19 @@ const start = (container) => {
     app.use(helmet())
   // Error handling:
     app.use(( err,req,res,next ) => {
-      reject(new Error('!Some err: ',err))
+      reject(new Error('!Some application error: ',err))
       res.status(500).send('Something went wrong', err)
       next()
     })
   // Check user-authentication:
     app.use(( req,res,next ) => {
       // Check User middleware:
+      next()
     })
   // Check user-authorized:
     app.use(( req,res,next ) => {
       // Check User middleware:
+      next()
     })
 
   // Attach Dependencies to requiest:
@@ -45,8 +48,10 @@ const start = (container) => {
       next()
     })
 
-    const api = tmln_api.bind(null,{repo})
-    api(app)
+    const tmlnAPI = _api.tmln_api.bind(null,{repo})
+    const usrAPI = _api.usr_api.bind(null,{repo})
+    usrAPI(app)
+    tmlnAPI(app)
 
     const server = app.listen(port, () => {
       resolve(server)

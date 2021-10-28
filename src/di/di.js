@@ -11,7 +11,9 @@ export default ({ serverSettings,dbSettings,database }, mediator) => {
 
       container.register({
         database: asValue(db),
-        serverSettings: asValue(serverSettings)
+        serverSettings: asValue(serverSettings),
+  // add models and data validation: joi library
+        // validate: joi.validate(object,type):({id,mail},'user')
       })
 
       mediator.emit('di.ready', container)
