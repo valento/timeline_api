@@ -2,7 +2,7 @@ import { createContainer,asValue } from 'awilix'
 
 // CREATE DEPENDENCIES Object: db,models,services:
 
-export default ({ serverSettings,dbSettings,database }, mediator) => {
+export default ({ serverSettings,dbSettings,database,models }, mediator) => {
 
   mediator.once('init', () => {
   // create dependencies Container object:
@@ -13,7 +13,8 @@ export default ({ serverSettings,dbSettings,database }, mediator) => {
         database: asValue(db),
         serverSettings: asValue(serverSettings),
   // add models and data validation: joi library
-        // validate: joi.validate(object,type):({id,mail},'user')
+        validate: asValue(models.validate),
+        user: asValue(models.user)
       })
 
       mediator.emit('di.ready', container)

@@ -1,9 +1,8 @@
 import { serverSettings, dbSettings } from './config/index.js'
 import initDI from './di.js'
 import database from '../db/index.js'
+import models from '../models/index.js'
 
-console.log('ServerSettings: ',serverSettings)
-
-const init = initDI.bind(null,{ serverSettings,dbSettings,database })
+const init = initDI.bind(null,{ serverSettings,dbSettings,database,models })
 
 export default Object.assign({},{ init })

@@ -1,5 +1,5 @@
-import EventEmmiter from 'events'
 import { asValue } from 'awilix'
+import EventEmmiter from 'events'
 
 import di from './di/index.js'
 import server from './server/index.js'
@@ -37,7 +37,7 @@ mediator.on('di.ready', container => {
   })
   .catch( err => console.error(err))
 })
-mediator.on('di.error', err => { console.log('DI failed becaouse of: ', err) })
+mediator.on('di.error', err => { console.log('DI failed because of: ', err) })
 
 // REBOOT Application:
 di.init(mediator)

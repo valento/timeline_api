@@ -1,28 +1,50 @@
-'use strict';
+"use strict";
 
-var _events = require('events');
+var _awilix = require("awilix");
 
-var _events2 = _interopRequireDefault(_events);
+var _events = _interopRequireDefault(require("events"));
 
-var _di = require('./di');
+var _index = _interopRequireDefault(require("./di/index.js"));
 
-var _di2 = _interopRequireDefault(_di);
+var _index2 = _interopRequireDefault(require("./server/index.js"));
 
-var _server = require('./server');
+var _repository = _interopRequireDefault(require("./repo/repository.js"));
 
-var _server2 = _interopRequireDefault(_server);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+// Configure an Event Notifier:
+var mediator = new _events["default"](); // Handle Errors:
 
-var mediator = new _events2.default();
-console.log('Emmiter running');
+process.on('uncaughtRejection', function (err, promise) {
+  console.error('Unhandled Rejection', err);
+}); // Set Event Emmiter:
+
 mediator.on('di.ready', function (container) {
-  //repository.connect().then( repo => {return server.start(container)})
-  _server2.default.start(container);
-});
+  var rep; // init DB-API:
 
-// REBOOT:
-_di2.default.init(mediator);
+  _repository["default"].connect(container).then(function (repo) {
+    rep = repo; // register DB-API in DI-container:
+
+    container.register({
+      repo: (0, _awilix.asValue)(repo)
+    }); // Start Server with DI-container
+
+    return _index2["default"].start(container);
+  }).then(function (app) {
+    app.on('close', function () {
+      rep.disconnect(); // or get repo from the container:
+      //container.cradle.database.disconnect()
+    });
+    console.log('Server started on: ', container.cradle.serverSettings.port);
+  })["catch"](function (err) {
+    return console.error(err);
+  });
+});
+mediator.on('di.error', function (err) {
+  console.log('DI failed because of: ', err);
+}); // REBOOT Application:
+
+_index["default"].init(mediator);
 
 mediator.emit('init');
 //# sourceMappingURL=index.js.map

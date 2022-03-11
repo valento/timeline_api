@@ -2,30 +2,29 @@
   "name": "timeline-api",
   "version": "1.0.0",
   "description": "Timeline App API",
+  "author": "Valentin M.",
+  "license": "MIT",
   "main": "src/index.js",
-  "module": "src/index.js",
-  "type": "module",
   "jest": {
     "transform": {
       "\\.js?$": "babel-jest"
     }
   },
   "babel": {
-    "presets": ["@babel/preset-env"]
+    "presets": [ "@babel/preset-env" ]
   },
-  "author": "Valentin M.",
-  "license": "MIT",
   "scripts": {
-    "start": "node ./build/index.js",
-    "dev": "nodemon --watch ./src --exec babel-node -- ./src/index.js --presets=env,stage-2",
-    "build-prod": "set NODE_ENV=production&& babel -d ./build ./src -s --presets=env,stage-2",
+    "start": "set NODE_ENV=production&& node ./build/index.js",
+    "dev": "set NODE_ENV=development&& nodemon --watch ./src --exec babel-node ./src/index.js",
+    "build-prod": "set NODE_ENV=production&& babel -d ./build ./src -s",
     "//": "mocha -R spec src/**/*.spec.js",
     "test": "jest"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
     "babel-eslint": "^10.1.0",
-    "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
     "esm": "^3.2.25",
     "jest": "^27.3.1",
@@ -38,11 +37,14 @@
     "awilix": "^5.0.1",
     "axios": "^0.21.4",
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "http-errors": "^2.0.0",
+    "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1"
+    "mysql2": "^2.3.2"
   }
 }

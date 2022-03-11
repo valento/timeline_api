@@ -1,7 +1,8 @@
-import mysql from 'mysql'
+import mysql from 'mysql2'
 
 export const connect = (options,mediator) => {
   //const mydb = mysql.createPool(options)
+  console.log(options)
 
   mediator.once('boot.ready', () => {
     const mydb = mysql.createPool(options)

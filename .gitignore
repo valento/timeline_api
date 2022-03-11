@@ -4,5 +4,6 @@
 *.sql
 *.txt
 */config
+*/build
 #ssl
 node_modules

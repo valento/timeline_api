@@ -1,10 +1,15 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _db = require('./db');
+var _db = require("./db.js");
 
-exports.default = Object.assign({}, { connect: _db.connect });
+var _default = Object.assign({}, {
+  connect: _db.connect
+});
+
+exports["default"] = _default;
 //# sourceMappingURL=index.js.map

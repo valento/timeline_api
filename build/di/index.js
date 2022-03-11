@@ -1,20 +1,30 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _config = require('./config');
+var _index = require("./config/index.js");
 
-var _di = require('./di');
+var _di = _interopRequireDefault(require("./di.js"));
 
-var _db = require('../db');
+var _index2 = _interopRequireDefault(require("../db/index.js"));
 
-var _db2 = _interopRequireDefault(_db);
+var _index3 = _interopRequireDefault(require("../models/index.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var init = _di.initDI.bind(null, { serverSettings: _config.serverSettings, dbSettings: _config.dbSettings, database: _db2.default });
+var init = _di["default"].bind(null, {
+  serverSettings: _index.serverSettings,
+  dbSettings: _index.dbSettings,
+  database: _index2["default"],
+  models: _index3["default"]
+});
 
-exports.default = Object.assign({}, { init: init });
+var _default = Object.assign({}, {
+  init: init
+});
+
+exports["default"] = _default;
 //# sourceMappingURL=index.js.map
